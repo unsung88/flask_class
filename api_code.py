@@ -18,12 +18,6 @@ app.secret_key = 'w00t'
 api = Api(app)
 
 
-@app.before_first_request
-def create_tables():
-	sa.create_all()
-
-
-
 jwt = JWT(app, authenticate, identity)
 
 #Utils.create_user_table()
@@ -38,8 +32,6 @@ api.add_resource(UserRegister, '/register')
 
 
 if __name__ == '__main__':
-	
 	from sa import sa
 	sa.init_app(app)
-
 	app.run(port=6565, debug=True)
