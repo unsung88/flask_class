@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-
+import os
 from flask import Flask 
 from flask_restful import Api
 from flask_jwt import JWT
@@ -11,7 +11,10 @@ from resources.store import Stores, Store
 
 #Create app
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///data.db'
+#set the database URI to DATABASE_URL env var if present or sqlite is not
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///data.db')
+#'postgres://ggpsizvybowzud:6252c858561f322786e4433e2ced44fb8bba98f3efbfdd4e15aa8c3fa2f9ded4@ec2-54-235-88-58.compute-1.amazonaws.com:5432/d89qtfk2vl362v' 
+#'sqlite:///data.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = 'w00t'
 #Cretae API
